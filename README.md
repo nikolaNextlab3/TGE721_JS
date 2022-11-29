@@ -1,6 +1,6 @@
-# ERC20 Token deployment on Juneo Gold chain
+# ERC721 Token deployment on Juneo Gold chain
 
-This hardhat project is a demostraction of how to make and deploy a ERC20 smart contract (token) on to the Juneo Gold chain.
+This hardhat project is a demostraction of how to make and deploy a ERC721 smart contract (NFT) on to the Juneo Gold chain.
 
 ## Node modules installation
 
@@ -25,21 +25,18 @@ PRIVATE_KEY=89d30a865a1aae5c6a847d860f3e0de44b5f3a168f7b7a57ea3efc19c9ab4a35
 Please bare in mind to keep your private key in a safe place and to not give it to anyone you do not trust!
 The address which we gave in this example is form the integrated hardhat network runner program. Do not send any real crypto tokens to it as they will get lost!
 
-## Smart contract (token) configuration
+## Smart contract (NFT) configuration
 
-### Decimal count
+### Base URI
 
-If you would like to configure the smart contract itself you can do so by finding it inside the contracts folder/
+For this tutorial we have provided 50 metadata files (JSON files), each with a unique image file (PNG). The base URI for the IPFS that hosts the metadata files
+is assigned via the return statment in the _baseURI() function (i.e. return "https://gateway.pinata.cloud/ipfs/QmcJnDkKFymxP4niVya6cz55XxzUqBXApVVZ3fPjRuhfuM/").
 
-The initial decimal count for the token is set to 1 (as in 0.1), and the maximum amount is 18 (as it is with ETH). If you would like to change the decimal count of your token, you can do this by changing the return value of the decimals() function that is a part of the TGE20.sol smart contract.
+If you would like to use your own metadata files/images simple replace the return value in the _baseURI() function with your own URI.
 
-### Initial token amount
+### Max Token Count
 
-If we take a look at the TGE20.sol file we can se that within constructor function (the function that is called when the contract is deployed) we also call the _mint function that mints the initial amount of token that we specify (i.e. 1000 is the initial given value is 100 and the decimal count is set to 1). 
-
-In order to speficy how many token we would like to mint during the initial deployment we can do so by chaining the value of the initialAmount constant inside the deploy.js script.
-
-The deploy.js script is ran when we deploy the smart contract (token) onto the block chain and in turn it contains all of the important information regarding the deployment process (see the comments inside the deploy.js file for more infromation).
+Also, since we have a maximum of 50 JSONs/Unique PNGs to go along with our NFTs we have the maxToken variable, which is set to 50. If you have more or less accommodating metadata files, simply change the value of the maxToken variable before compiling the ERC721 smart contract (NFT).
 
 ## Deployment
 
@@ -47,10 +44,12 @@ After we have done all of the aformentioned steps we can finally deploy the cont
 
 npx hardhat run scripts/deploy.js --network juneo_gold
 
-After the script has done executing we can see that the console has logged some information regarding the deployment process. The most interesting bit of information for us is the deployment address of the ERC20 smart contract (token). 
+After the script has done executing we can see that the console has logged some information regarding the deployment process. The most interesting bit of information for us is the deployment address of the ERC721 smart contract (NFT). 
 
 An example of the contract address would be:
 
 0x5FbDB2315678afecb367f032d93F642f64180aa3
 
-In order to see our token in our wallet we simply have to import the token by using the address that was logged out during the deployment process.
+In order to see our NFT (as a token) in our wallet we simply have to import the token by using the address that was logged out during the deployment process.
+
+We can also go to a marketplace that works on the block chain to which we deployed the NFT in order to see the image and all of its attributes.
